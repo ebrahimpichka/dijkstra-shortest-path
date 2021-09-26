@@ -10,11 +10,12 @@ class Node():
         self.is_visited = False
     
 class Graph:
-    def __init__(self):
+    def __init__(self, is_directed=True):
         """creates the corresponding attributes for the Graph object"""
         self.nodes = set()
         self.visited = set()
         self.unvisited = set()
+        self.is_directed = is_directed
         # self.edges = dict()
 
     def add_node(self, node: Node):
@@ -36,6 +37,8 @@ class Graph:
             for node_2 in self.nodes:
                 if (node_1.id == from_node_id) and  (node_2.id == to_node_id):
                     node_1.neighbours.add((node_2,weight))
+                    if not self.is_directed:
+                        node_2.neighbours.add((node_1,weight))
         
 
 
@@ -126,11 +129,12 @@ def solve(graph, source_node_id, target_node_id, trace=False):
 if __name__ == '__main__':
 
     # input arguments
-    source_node_id = 's'
-    target_node_id = 'e'
+    source_node_id = 'a'
+    target_node_id = 'h'
+
 
     # constructing the directed grapgh
-    graph = Graph()
+    graph = Graph(is_directed=False)
 
     # problem set 1 (easy)
     # graph.add_node(Node(0))
@@ -147,23 +151,76 @@ if __name__ == '__main__':
     # graph.add_edge(from_node_id=3, to_node_id=4, weight=3)
 
     # problem set 2 (medium)
-    graph.add_node(Node('s'))
-    graph.add_node(Node('a'))
-    graph.add_node(Node('c'))
-    graph.add_node(Node('e'))
-    graph.add_node(Node('b'))
-    graph.add_node(Node('d'))
+    # graph.add_node(Node('s'))
+    # graph.add_node(Node('a'))
+    # graph.add_node(Node('c'))
+    # graph.add_node(Node('e'))
+    # graph.add_node(Node('b'))
+    # graph.add_node(Node('d'))
 
-    graph.add_edge(from_node_id='s', to_node_id='a', weight=1)
+    # graph.add_edge(from_node_id='s', to_node_id='a', weight=1)
+    
+    # graph.add_edge(from_node_id='a', to_node_id='c', weight=2)
+    # graph.add_edge(from_node_id='c', to_node_id='e', weight=1)
+    # graph.add_edge(from_node_id='s', to_node_id='b', weight=5)
+    # graph.add_edge(from_node_id='b', to_node_id='d', weight=2)
+    # graph.add_edge(from_node_id='d', to_node_id='e', weight=2)
+    # graph.add_edge(from_node_id='a', to_node_id='b', weight=2)
+    # graph.add_edge(from_node_id='a', to_node_id='d', weight=1)
+    # graph.add_edge(from_node_id='c', to_node_id='d', weight=3)
+
+
+    # problem set 3(hard)
+    graph.add_node(Node('a'))
+    graph.add_node(Node('b'))
+    graph.add_node(Node('c'))
+    graph.add_node(Node('d'))
+    graph.add_node(Node('e'))
+    graph.add_node(Node('f'))
+    graph.add_node(Node('g'))
+    graph.add_node(Node('h'))
+
+    graph.add_edge(from_node_id='a', to_node_id='b', weight=8)
+    # graph.add_edge(from_node_id='b', to_node_id='a', weight=8)
     
     graph.add_edge(from_node_id='a', to_node_id='c', weight=2)
-    graph.add_edge(from_node_id='c', to_node_id='e', weight=1)
-    graph.add_edge(from_node_id='s', to_node_id='b', weight=5)
+    # graph.add_edge(from_node_id='c', to_node_id='a', weight=2)
+
+    graph.add_edge(from_node_id='a', to_node_id='d', weight=5)
+    # graph.add_edge(from_node_id='d', to_node_id='a', weight=5)
+
+    graph.add_edge(from_node_id='b', to_node_id='f', weight=13)
+    # graph.add_edge(from_node_id='f', to_node_id='b', weight=13)
+
     graph.add_edge(from_node_id='b', to_node_id='d', weight=2)
-    graph.add_edge(from_node_id='d', to_node_id='e', weight=2)
-    graph.add_edge(from_node_id='a', to_node_id='b', weight=2)
-    graph.add_edge(from_node_id='a', to_node_id='d', weight=1)
-    graph.add_edge(from_node_id='c', to_node_id='d', weight=3)
+    # graph.add_edge(from_node_id='d', to_node_id='b', weight=2)
+
+    graph.add_edge(from_node_id='c', to_node_id='d', weight=2)
+    # graph.add_edge(from_node_id='d', to_node_id='c', weight=2)
+
+    graph.add_edge(from_node_id='c', to_node_id='e', weight=5)
+    # graph.add_edge(from_node_id='e', to_node_id='c', weight=5)
+
+    graph.add_edge(from_node_id='d', to_node_id='f', weight=6)
+    # graph.add_edge(from_node_id='f', to_node_id='d', weight=6)
+
+    graph.add_edge(from_node_id='d', to_node_id='g', weight=3)
+    # graph.add_edge(from_node_id='g', to_node_id='d', weight=3)
+
+    graph.add_edge(from_node_id='d', to_node_id='e', weight=1)
+    # graph.add_edge(from_node_id='e', to_node_id='d', weight=1)
+
+    graph.add_edge(from_node_id='e', to_node_id='g', weight=1)
+    # graph.add_edge(from_node_id='g', to_node_id='e', weight=1)
+
+    graph.add_edge(from_node_id='f', to_node_id='h', weight=3)
+    # graph.add_edge(from_node_id='h', to_node_id='f', weight=3)
+
+    graph.add_edge(from_node_id='f', to_node_id='g', weight=2)
+    # graph.add_edge(from_node_id='g', to_node_id='f', weight=2)
+
+    graph.add_edge(from_node_id='g', to_node_id='h', weight=6)
+    # graph.add_edge(from_node_id='h', to_node_id='g', weight=6)
 
     path, total_cost = solve(graph, source_node_id=source_node_id, target_node_id=target_node_id ,trace=False)
     path.reverse()
